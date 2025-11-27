@@ -1,6 +1,39 @@
 import { sampleProjects } from '../data/sampleProjects';
 import { router } from '../router';
 
+// Generate realistic fake email from person's name
+function generateRealisticEmail(fullName: string): string {
+  const emailProviders = ['gmail.com', 'outlook.com', 'yahoo.com', 'hotmail.com', 'protonmail.com'];
+  const randomProvider = emailProviders[Math.floor(Math.random() * emailProviders.length)];
+  
+  // Clean and split the name
+  const nameParts = fullName.toLowerCase()
+    .replace(/[^a-z\s]/g, '') // Remove special characters
+    .split(' ')
+    .filter(part => part.length > 0);
+  
+  if (nameParts.length === 0) return 'developer@gmail.com';
+  
+  let emailPrefix = '';
+  
+  if (nameParts.length === 1) {
+    // Single name: use name + random number
+    emailPrefix = nameParts[0] + Math.floor(Math.random() * 99 + 1);
+  } else if (nameParts.length >= 2) {
+    // Multiple names: use various realistic patterns
+    const patterns = [
+      `${nameParts[0]}.${nameParts[1]}`, // john.doe
+      `${nameParts[0]}${nameParts[1]}`, // johndoe  
+      `${nameParts[0][0]}${nameParts[1]}`, // jdoe
+      `${nameParts[0]}.${nameParts[1][0]}`, // john.d
+      `${nameParts[0]}${nameParts[1][0]}${Math.floor(Math.random() * 99 + 1)}` // johnd23
+    ];
+    emailPrefix = patterns[Math.floor(Math.random() * patterns.length)];
+  }
+  
+  return `${emailPrefix}@${randomProvider}`;
+}
+
 export function renderProjectDetail(): HTMLElement {
   const container = document.createElement('div');
   container.className = 'min-h-screen bg-dark-900';
@@ -71,7 +104,7 @@ export function renderProjectDetail(): HTMLElement {
         <!-- Contact Button -->
         <div class="pt-6 border-t border-neon-blue/20">
           <a 
-            href="mailto:${project.owner.githubUsername}@example.com?subject=Collaboration%20on%20${encodeURIComponent(project.title)}&body=Hi%20${encodeURIComponent(project.owner.name)},%0D%0A%0D%0AI%20found%20your%20project%20'${encodeURIComponent(project.title)}'%20on%20Coders%20Constellation%20and%20I'm%20interested%20in%20collaborating.%0D%0A%0D%0AProject:%20${encodeURIComponent(project.title)}%0D%0ATech%20Stack:%20${encodeURIComponent(project.techStack.join(', '))}%0D%0A%0D%0AI'd%20love%20to%20discuss%20how%20I%20can%20contribute%20to%20this%20project.%0D%0A%0D%0ABest%20regards"
+            href="mailto:${generateRealisticEmail(project.owner.name)}?subject=Collaboration%20on%20${encodeURIComponent(project.title)}&body=Hi%20${encodeURIComponent(project.owner.name)},%0D%0A%0D%0AI%20found%20your%20project%20'${encodeURIComponent(project.title)}'%20on%20Coders%20Constellation%20and%20I'm%20interested%20in%20collaborating.%0D%0A%0D%0AProject:%20${encodeURIComponent(project.title)}%0D%0ATech%20Stack:%20${encodeURIComponent(project.techStack.join(', '))}%0D%0A%0D%0AI'd%20love%20to%20discuss%20how%20I%20can%20contribute%20to%20this%20project.%0D%0A%0D%0ABest%20regards"
             class="btn btn-primary w-full md:w-auto px-8 py-3 text-lg inline-block text-center">
             Contact Project Owner
           </a>
