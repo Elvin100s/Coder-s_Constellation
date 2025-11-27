@@ -70,21 +70,24 @@
   .loader {
     font-weight: bold;
     font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
-    font-size: 24px;
+    font-size: 28px;
     color: #00f5ff;
     text-align: center;
     position: relative;
     animation: pulse 1.5s ease-in-out infinite;
+    text-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
   }
   
   .loader::after {
     content: '...';
     animation: dots 1.5s steps(4, end) infinite;
+    color: #ff006e;
   }
 
   .loading-overlay {
     backdrop-filter: blur(10px);
-    background: rgba(13, 13, 13, 0.95);
+    background: rgba(13, 13, 13, 0.98);
+    transition: opacity 0.3s ease-in-out;
   }
 }
 

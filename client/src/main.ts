@@ -66,10 +66,10 @@ function renderPage(content: HTMLElement) {
 // Initialize router
 router.init();
 
-// Hide loading screen after initialization
+// Hide loading screen after initialization (increased time to see animation)
 setTimeout(() => {
   loadingScreen.hide();
-}, 800);
+}, 2000);
 
 console.log('🌟 Coders Constellation initialized!');
 
@@ -187,7 +187,13 @@ console.log('🌟 Coders Constellation initialized!');
   setTimeout(() => {
     loadingScreen.hide();
     console.log('Loading screen test complete!');
-  }, 3000);
+  }, 5000);
+};
+
+// Show loading screen on demand
+(window as any).showLoading = (message = 'Loading...', duration = 3000) => {
+  loadingScreen.show(message);
+  setTimeout(() => loadingScreen.hide(), duration);
 };
 
 // Import Supabase testing utilities
