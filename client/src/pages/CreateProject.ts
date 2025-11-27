@@ -48,18 +48,24 @@ export function renderCreateProject(): HTMLElement {
 
           <!-- Tech Stack -->
           <div class="mb-6">
-            <label for="techStack" class="block text-sm font-medium text-neon-blue mb-2">
-              Tech Stack *
+            <label class="block text-sm font-medium text-neon-blue mb-2">
+              Tech Stack * <span class="text-gray-400 text-xs">(Select multiple)</span>
             </label>
-            <input 
-              type="text" 
-              id="techStack" 
-              name="techStack"
-              required
-              placeholder="e.g., React, Node.js, PostgreSQL, Docker"
-              class="input"
-            />
-            <p class="text-sm text-gray-400 mt-1">Separate technologies with commas</p>
+            <div class="relative">
+              <div id="techStackSelector" class="input min-h-[42px] cursor-pointer flex flex-wrap gap-2 items-center">
+                <span id="techStackPlaceholder" class="text-gray-400">Select technologies...</span>
+              </div>
+              <div id="techStackDropdown" class="absolute top-full left-0 right-0 bg-dark-700 border border-dark-600 rounded-lg mt-1 shadow-lg z-50 hidden max-h-60 overflow-y-auto">
+                <div class="p-2">
+                  <input type="text" id="techStackSearch" placeholder="Search technologies..." class="w-full px-3 py-2 bg-dark-800 border border-dark-600 rounded text-white text-sm focus:outline-none focus:border-neon-blue">
+                </div>
+                <div id="techStackOptions" class="max-h-48 overflow-y-auto">
+                  <!-- Options will be populated by JavaScript -->
+                </div>
+              </div>
+            </div>
+            <input type="hidden" id="techStack" name="techStack" required />
+            <p class="text-sm text-gray-400 mt-1">Choose the technologies your project uses</p>
           </div>
 
           <!-- GitHub Repository (Optional) -->
@@ -154,6 +160,7 @@ export function renderCreateProject(): HTMLElement {
   
   // Setup form submission
   setTimeout(() => {
+    setupTechStackSelector();
     const form = document.getElementById('createProjectForm') as HTMLFormElement;
     const errorMessage = document.getElementById('errorMessage');
     const errorText = document.getElementById('errorText');
@@ -207,7 +214,7 @@ export function renderCreateProject(): HTMLElement {
         // Reset form
         form.reset();
         
-        // Redirect to home page after a short delay
+        // Redirect to dashboard to see the new project
         setTimeout(() => {
           window.history.pushState({}, '', '/');
           window.dispatchEvent(new PopStateEvent('popstate'));

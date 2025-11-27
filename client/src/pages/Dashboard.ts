@@ -1,7 +1,8 @@
 import { sampleProjects } from '../data/sampleProjects';
 import { renderProjectCard } from '../components/ProjectCard';
+import { ProjectService } from '../services/projectService';
 
-// Using sample projects for display
+// Load projects from Supabase with fallback to sample data
 
 export function renderDashboard(): HTMLElement {
   const container = document.createElement('div');
@@ -203,11 +204,11 @@ export function renderDashboard(): HTMLElement {
   
   container.appendChild(content);
   
-  // Render projects after DOM is ready
+  // Load and render projects after DOM is ready
   requestAnimationFrame(() => {
-    setTimeout(() => {
-      console.log('Dashboard DOM ready, rendering projects...');
-      renderProjects(sampleProjects);
+    setTimeout(async () => {
+      console.log('Dashboard DOM ready, loading projects...');
+      await loadAndRenderProjects();
       setupFilters();
     }, 50);
   });
@@ -215,7 +216,37 @@ export function renderDashboard(): HTMLElement {
   return container;
 }
 
-// Using sample projects from frontend data
+// Global variable to store current projects
+let currentProjects: any[] = [];
+
+// Export function to refresh projects (useful after creating new projects)
+export async function refreshProjects() {
+  await loadAndRenderProjects();
+}
+
+// Load projects from Supabase with fallback to sample data
+async function loadAndRenderProjects() {
+  try {
+    console.log('Loading projects from Supabase...');
+    const supabaseProjects = await ProjectService.getAllProjects();
+    
+    if (supabaseProjects && supabaseProjects.length > 0) {
+      console.log('Loaded', supabaseProjects.length, 'projects from Supabase');
+      // Convert Supabase format to frontend format
+      currentProjects = supabaseProjects.map(project => ProjectService.convertToFrontendFormat(project));
+    } else {
+      console.log('No projects in Supabase, using sample data');
+      currentProjects = [...sampleProjects];
+    }
+    
+    renderProjects(currentProjects);
+  } catch (error) {
+    console.error('Error loading projects from Supabase:', error);
+    console.log('Falling back to sample data');
+    currentProjects = [...sampleProjects];
+    renderProjects(currentProjects);
+  }
+}
 
 function renderProjects(projects: any[]) {
   console.log('renderProjects called with', projects.length, 'projects');
@@ -236,10 +267,10 @@ function renderProjects(projects: any[]) {
   
   // Update results counter
   if (resultsCounter) {
-    if (projects.length === sampleProjects.length) {
+    if (projects.length === currentProjects.length) {
       resultsCounter.textContent = `Showing all ${projects.length} projects`;
     } else {
-      resultsCounter.textContent = `Found ${projects.length} of ${sampleProjects.length} projects`;
+      resultsCounter.textContent = `Found ${projects.length} of ${currentProjects.length} projects`;
     }
   }
   
@@ -363,7 +394,7 @@ function setupFilters() {
     const selectedCategory = categoryFilter?.value || '';
     const selectedSort = sortFilter?.value || 'newest';
     
-    let filtered = [...sampleProjects];
+    let filtered = [...currentProjects];
     
     // Apply search filter
     if (searchTerm) {
@@ -450,7 +481,7 @@ function setupFilters() {
     if (techFilter) techFilter.value = '';
     if (countryFilter) countryFilter.value = '';
     if (categoryFilter) categoryFilter.value = '';
-    renderProjects(sampleProjects);
+    renderProjects(currentProjects);
   };
   
   // Advanced filters modal handlers
