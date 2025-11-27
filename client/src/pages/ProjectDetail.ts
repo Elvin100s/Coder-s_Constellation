@@ -71,11 +71,9 @@ export function renderProjectDetail(): HTMLElement {
         <!-- Contact Button -->
         <div class="pt-6 border-t border-neon-blue/20">
           <a 
-            href="${project.githubRepo ? project.githubRepo + '/issues' : 'https://github.com/' + project.owner.githubUsername}"
-            class="btn btn-primary w-full md:w-auto px-8 py-3 text-lg inline-block text-center"
-            target="_blank"
-            rel="noopener noreferrer">
-            ${project.githubRepo ? 'Create Issue in Repository' : 'View GitHub Profile'}
+            href="mailto:${project.owner.githubUsername}@example.com?subject=Collaboration%20on%20${encodeURIComponent(project.title)}&body=Hi%20${encodeURIComponent(project.owner.name)},%0D%0A%0D%0AI%20found%20your%20project%20'${encodeURIComponent(project.title)}'%20on%20Coders%20Constellation%20and%20I'm%20interested%20in%20collaborating.%0D%0A%0D%0AProject:%20${encodeURIComponent(project.title)}%0D%0ATech%20Stack:%20${encodeURIComponent(project.techStack.join(', '))}%0D%0A%0D%0AI'd%20love%20to%20discuss%20how%20I%20can%20contribute%20to%20this%20project.%0D%0A%0D%0ABest%20regards"
+            class="btn btn-primary w-full md:w-auto px-8 py-3 text-lg inline-block text-center">
+            Contact Project Owner
           </a>
         </div>
       </div>
