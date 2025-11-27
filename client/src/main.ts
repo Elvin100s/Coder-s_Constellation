@@ -69,7 +69,7 @@ router.init();
 // Hide loading screen after initialization (increased time to see animation)
 setTimeout(() => {
   loadingScreen.hide();
-}, 2000);
+}, 3000);
 
 console.log('🌟 Coders Constellation initialized!');
 

@@ -7,8 +7,14 @@ export class LoadingScreen {
 
     // Create overlay
     this.overlay = document.createElement('div');
-    this.overlay.className = 'loading-overlay fixed inset-0 bg-dark-900/95 flex items-center justify-center z-[9999]';
+    this.overlay.className = 'loading-overlay fixed inset-0 bg-dark-900/98 flex items-center justify-center';
     this.overlay.style.backdropFilter = 'blur(10px)';
+    this.overlay.style.zIndex = '99999';
+    this.overlay.style.position = 'fixed';
+    this.overlay.style.top = '0';
+    this.overlay.style.left = '0';
+    this.overlay.style.width = '100%';
+    this.overlay.style.height = '100%';
     
     this.overlay.innerHTML = `
       <div class="text-center">
