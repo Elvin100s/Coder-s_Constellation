@@ -1,67 +1,23 @@
-import { ProjectService } from '../services/projectService';
+import { sampleProjects } from '../data/sampleProjects';
 import { router } from '../router';
 
 export function renderProjectDetail(): HTMLElement {
   const container = document.createElement('div');
   container.className = 'min-h-screen bg-dark-900';
   
-  // Show loading state initially
-  container.innerHTML = `
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-      <div class="animate-pulse">
-        <div class="h-8 bg-gray-700 rounded w-3/4 mx-auto mb-4"></div>
-        <div class="h-4 bg-gray-700 rounded w-1/2 mx-auto"></div>
-      </div>
-    </div>
-  `;
-  
-  // Load project data
   const projectId = router.getParam('id');
-  if (projectId) {
-    loadProjectData(container, projectId);
-  } else {
-    showNotFound(container);
-  }
+  const project = sampleProjects.find(p => p.id === projectId);
   
-  return container;
-}
-
-async function loadProjectData(container: HTMLElement, projectId: string) {
-  try {
-    const project = await ProjectService.getProjectById(projectId);
-    
-    if (!project) {
-      showNotFound(container);
-      return;
-    }
-    
-    // Convert to frontend format
-    const frontendProject = ProjectService.convertToFrontendFormat(project);
-    renderProjectContent(container, frontendProject);
-    
-  } catch (error) {
-    console.error('Error loading project:', error);
+  if (!project) {
     container.innerHTML = `
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-        <h1 class="text-2xl font-bold text-white mb-4">Error Loading Project</h1>
-        <p class="text-gray-400 mb-8">There was an error loading the project. Please try again.</p>
+        <h1 class="text-2xl font-bold text-white mb-4">Project Not Found</h1>
+        <p class="text-gray-400 mb-8">The project you're looking for doesn't exist.</p>
         <a href="/" data-link class="btn btn-primary">Back to Projects</a>
       </div>
     `;
+    return container;
   }
-}
-
-function showNotFound(container: HTMLElement) {
-  container.innerHTML = `
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-      <h1 class="text-2xl font-bold text-white mb-4">Project Not Found</h1>
-      <p class="text-gray-400 mb-8">The project you're looking for doesn't exist.</p>
-      <a href="/" data-link class="btn btn-primary">Back to Projects</a>
-    </div>
-  `;
-}
-
-function renderProjectContent(container: HTMLElement, project: any) {
   container.innerHTML = `
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <!-- Back Button -->

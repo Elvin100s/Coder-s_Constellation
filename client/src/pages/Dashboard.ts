@@ -1,7 +1,7 @@
-import { ProjectService } from '../services/projectService';
+import { sampleProjects } from '../data/sampleProjects';
 import { renderProjectCard } from '../components/ProjectCard';
 
-let allProjects: any[] = [];
+// Using sample projects instead of database
 
 export function renderDashboard(): HTMLElement {
   const container = document.createElement('div');
@@ -203,11 +203,12 @@ export function renderDashboard(): HTMLElement {
   
   container.appendChild(content);
   
-  // Load and render projects after DOM is ready
+  // Render projects after DOM is ready
   requestAnimationFrame(() => {
-    setTimeout(async () => {
-      console.log('Dashboard DOM ready, loading projects...');
-      await loadProjects();
+    setTimeout(() => {
+      console.log('Dashboard DOM ready, rendering projects...');
+      // Using sample projects
+      renderProjects(sampleProjects);
       setupFilters();
     }, 50);
   });
@@ -215,40 +216,7 @@ export function renderDashboard(): HTMLElement {
   return container;
 }
 
-async function loadProjects() {
-  try {
-    // Show loading state
-    const grid = document.getElementById('projectsGrid');
-    if (grid) {
-      grid.innerHTML = `
-        <div class="col-span-full flex justify-center py-12">
-          <div class="animate-pulse text-gray-400">Loading projects...</div>
-        </div>
-      `;
-    }
-
-    // Load projects from database
-    const dbProjects = await ProjectService.getAllProjects();
-    
-    // Convert to frontend format
-    allProjects = dbProjects.map(project => ProjectService.convertToFrontendFormat(project));
-    
-    console.log('Loaded', allProjects.length, 'projects from database');
-    renderProjects(allProjects);
-    
-  } catch (error) {
-    console.error('Error loading projects:', error);
-    const grid = document.getElementById('projectsGrid');
-    if (grid) {
-      grid.innerHTML = `
-        <div class="col-span-full text-center py-12">
-          <p class="text-red-400 mb-4">Error loading projects</p>
-          <button onclick="location.reload()" class="btn btn-primary">Retry</button>
-        </div>
-      `;
-    }
-  }
-}
+// Using sample projects from frontend data
 
 function renderProjects(projects: any[]) {
   console.log('renderProjects called with', projects.length, 'projects');
@@ -269,10 +237,10 @@ function renderProjects(projects: any[]) {
   
   // Update results counter
   if (resultsCounter) {
-    if (projects.length === allProjects.length) {
+    if (projects.length === sampleProjects.length) {
       resultsCounter.textContent = `Showing all ${projects.length} projects`;
     } else {
-      resultsCounter.textContent = `Found ${projects.length} of ${allProjects.length} projects`;
+      resultsCounter.textContent = `Found ${projects.length} of ${sampleProjects.length} projects`;
     }
   }
   
@@ -396,7 +364,7 @@ function setupFilters() {
     const selectedCategory = categoryFilter?.value || '';
     const selectedSort = sortFilter?.value || 'newest';
     
-    let filtered = [...allProjects];
+    let filtered = [...sampleProjects];
     
     // Apply search filter
     if (searchTerm) {
@@ -483,7 +451,7 @@ function setupFilters() {
     if (techFilter) techFilter.value = '';
     if (countryFilter) countryFilter.value = '';
     if (categoryFilter) categoryFilter.value = '';
-    renderProjects(allProjects);
+    renderProjects(sampleProjects);
   };
   
   // Advanced filters modal handlers
