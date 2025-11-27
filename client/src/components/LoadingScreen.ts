@@ -7,7 +7,8 @@ export class LoadingScreen {
 
     // Create overlay
     this.overlay = document.createElement('div');
-    this.overlay.className = 'loading-overlay fixed inset-0 bg-dark-900 flex items-center justify-center z-[9999]';
+    this.overlay.className = 'loading-overlay fixed inset-0 bg-dark-900/95 flex items-center justify-center z-[9999]';
+    this.overlay.style.backdropFilter = 'blur(10px)';
     
     this.overlay.innerHTML = `
       <div class="text-center">
@@ -24,18 +25,10 @@ export class LoadingScreen {
 
   hide() {
     if (this.overlay) {
-      // Fade out animation
-      this.overlay.style.opacity = '0';
-      this.overlay.style.transition = 'opacity 0.3s ease-out';
-      
-      setTimeout(() => {
-        if (this.overlay) {
-          this.overlay.remove();
-          this.overlay = null;
-        }
-        // Restore scrolling
-        document.body.style.overflow = '';
-      }, 300);
+      this.overlay.remove();
+      this.overlay = null;
+      // Restore scrolling
+      document.body.style.overflow = '';
     }
   }
 

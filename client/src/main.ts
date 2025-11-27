@@ -73,15 +73,6 @@ setTimeout(() => {
 
 console.log('🌟 Coders Constellation initialized!');
 
-// Auto-test loading screen on startup
-setTimeout(() => {
-  console.log('🧪 Testing loading screen...');
-  loadingScreen.show('Welcome to Coders Constellation!');
-  setTimeout(() => {
-    loadingScreen.hide();
-  }, 2000);
-}, 2000);
-
 // Debug function to check projects
 (window as any).checkProjects = () => {
   const grid = document.getElementById('projectsGrid');
