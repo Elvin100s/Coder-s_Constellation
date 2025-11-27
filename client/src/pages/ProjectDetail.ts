@@ -71,8 +71,10 @@ export function renderProjectDetail(): HTMLElement {
         <!-- Contact Button -->
         <div class="pt-6 border-t border-neon-blue/20">
           <a 
-            href="mailto:${project.owner.githubUsername}@users.noreply.github.com?subject=Collaboration on ${project.title}&body=Hi ${project.owner.name},%0D%0A%0D%0AI found your project '${project.title}' on Coders Constellation and I'm interested in collaborating.%0D%0A%0D%0AProject: ${project.title}%0D%0ATech Stack: ${project.techStack.join(', ')}%0D%0A%0D%0AI'd love to discuss how I can contribute to this project.%0D%0A%0D%0ABest regards"
-            class="btn btn-primary w-full md:w-auto px-8 py-3 text-lg inline-block text-center">
+            href="mailto:${project.owner.githubUsername}@users.noreply.github.com?subject=Collaboration%20on%20${encodeURIComponent(project.title)}&body=Hi%20${encodeURIComponent(project.owner.name)},%0D%0A%0D%0AI%20found%20your%20project%20'${encodeURIComponent(project.title)}'%20on%20Coders%20Constellation%20and%20I'm%20interested%20in%20collaborating.%0D%0A%0D%0AProject:%20${encodeURIComponent(project.title)}%0D%0ATech%20Stack:%20${encodeURIComponent(project.techStack.join(', '))}%0D%0A%0D%0AI'd%20love%20to%20discuss%20how%20I%20can%20contribute%20to%20this%20project.%0D%0A%0D%0ABest%20regards"
+            class="btn btn-primary w-full md:w-auto px-8 py-3 text-lg inline-block text-center"
+            target="_blank"
+            rel="noopener noreferrer">
             Contact Project Owner
           </a>
         </div>

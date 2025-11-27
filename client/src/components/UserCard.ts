@@ -1,4 +1,5 @@
 import { User } from '../data/sampleUsers';
+import { openEmailClient } from '../utils/emailHelper';
 
 export function renderUserCard(user: User): HTMLElement {
   const card = document.createElement('div');
@@ -59,13 +60,12 @@ export function renderUserCard(user: User): HTMLElement {
       </div>
       
       <div class="flex items-center space-x-2">
-        <a 
-           href="mailto:${user.email}?subject=Collaboration Opportunity - Coders Constellation&body=Hi ${user.name},%0D%0A%0D%0AI found your profile on Coders Constellation and I'm interested in collaborating on a project.%0D%0A%0D%0ABest regards"
+        <button 
            class="btn btn-primary text-sm px-4 py-2"
            title="Send Email to ${user.name}"
-           onclick="event.stopPropagation()">
+           onclick="event.stopPropagation(); openEmail('${user.email}', 'Collaboration Opportunity - Coders Constellation', 'Hi ${user.name},\\n\\nI found your profile on Coders Constellation and I\\'m interested in collaborating on a project.\\n\\nBest regards');">
           Contact
-        </a>
+        </button>
         
         <a href="https://github.com/${user.githubUsername}" 
            target="_blank" rel="noopener noreferrer"
