@@ -106,13 +106,6 @@ export function renderDashboard(): HTMLElement {
           <button id="clearAllFilters" class="btn btn-secondary whitespace-nowrap">
             Clear All
           </button>
-          
-          <button id="advancedFilters" class="btn btn-ghost whitespace-nowrap">
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
-            </svg>
-            Advanced
-          </button>
         </div>
       </div>
     </div>
@@ -132,74 +125,7 @@ export function renderDashboard(): HTMLElement {
       <button id="clearFilters" class="btn btn-primary">Clear Filters</button>
     </div>
     
-    <!-- Advanced Filters Modal -->
-    <div id="advancedFiltersModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
-      <div class="bg-dark-800 rounded-xl p-6 max-w-2xl w-full mx-4 border border-neon-blue/20 max-h-[80vh] overflow-y-auto">
-        <div class="flex items-center justify-between mb-6">
-          <h3 class="text-xl font-bold text-white">Advanced Filters</h3>
-          <button id="closeAdvancedFilters" class="text-gray-400 hover:text-white">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Date Range -->
-          <div>
-            <label class="block text-sm font-medium text-neon-blue mb-2">Date Range</label>
-            <select id="dateRangeFilter" class="input">
-              <option value="">All Time</option>
-              <option value="today">Today</option>
-              <option value="week">This Week</option>
-              <option value="month">This Month</option>
-              <option value="quarter">Last 3 Months</option>
-            </select>
-          </div>
-          
-          <!-- Project Complexity -->
-          <div>
-            <label class="block text-sm font-medium text-neon-blue mb-2">Project Complexity</label>
-            <select id="complexityFilter" class="input">
-              <option value="">Any Complexity</option>
-              <option value="beginner">Beginner Friendly</option>
-              <option value="intermediate">Intermediate</option>
-              <option value="advanced">Advanced</option>
-            </select>
-          </div>
-          
-          <!-- Team Size -->
-          <div>
-            <label class="block text-sm font-medium text-neon-blue mb-2">Looking For</label>
-            <select id="teamSizeFilter" class="input">
-              <option value="">Any Team Size</option>
-              <option value="solo">Solo Developer</option>
-              <option value="small">Small Team (2-3)</option>
-              <option value="large">Large Team (4+)</option>
-            </select>
-          </div>
-          
-          <!-- Has GitHub Repo -->
-          <div>
-            <label class="block text-sm font-medium text-neon-blue mb-2">Repository</label>
-            <select id="repoFilter" class="input">
-              <option value="">Any</option>
-              <option value="has-repo">Has GitHub Repo</option>
-              <option value="no-repo">No Repo Yet</option>
-            </select>
-          </div>
-        </div>
-        
-        <div class="flex space-x-3 mt-6">
-          <button id="applyAdvancedFilters" class="btn btn-primary flex-1">
-            Apply Filters
-          </button>
-          <button id="resetAdvancedFilters" class="btn btn-secondary">
-            Reset
-          </button>
-        </div>
-      </div>
-    </div>
+
   `;
   
   container.appendChild(content);
@@ -323,11 +249,6 @@ function setupFilters() {
   const sortFilter = document.getElementById('sortFilter') as HTMLSelectElement;
   const clearAllFiltersBtn = document.getElementById('clearAllFilters');
   const clearFiltersBtn = document.getElementById('clearFilters');
-  const advancedFiltersBtn = document.getElementById('advancedFilters');
-  const advancedFiltersModal = document.getElementById('advancedFiltersModal');
-  const closeAdvancedFiltersBtn = document.getElementById('closeAdvancedFilters');
-  const applyAdvancedFiltersBtn = document.getElementById('applyAdvancedFilters');
-  const resetAdvancedFiltersBtn = document.getElementById('resetAdvancedFilters');
   
   // Search suggestions data
   const searchTerms = [
@@ -508,27 +429,6 @@ function setupFilters() {
     if (categoryFilter) categoryFilter.value = '';
     renderProjects(currentProjects);
   };
-  
-  // Advanced filters modal handlers
-  advancedFiltersBtn?.addEventListener('click', () => {
-    advancedFiltersModal?.classList.remove('hidden');
-  });
-  
-  closeAdvancedFiltersBtn?.addEventListener('click', () => {
-    advancedFiltersModal?.classList.add('hidden');
-  });
-  
-  applyAdvancedFiltersBtn?.addEventListener('click', () => {
-    // Apply advanced filters logic here
-    advancedFiltersModal?.classList.add('hidden');
-    applyFilters();
-  });
-  
-  resetAdvancedFiltersBtn?.addEventListener('click', () => {
-    // Reset advanced filters
-    const advancedInputs = advancedFiltersModal?.querySelectorAll('select');
-    advancedInputs?.forEach(input => input.value = '');
-  });
   
   clearAllFiltersBtn?.addEventListener('click', clearAllFilters);
   clearFiltersBtn?.addEventListener('click', clearAllFilters);
