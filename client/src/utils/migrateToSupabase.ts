@@ -65,4 +65,4 @@ export async function compareDataSources() {
 
 // Global functions for testing
 (window as any).testSupabase = testSupabaseConnection
-(window as any).compareData = compareDataSources
+// (window as any).compareData = compareDataSources

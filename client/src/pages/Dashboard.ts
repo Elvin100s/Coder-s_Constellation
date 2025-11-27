@@ -405,7 +405,7 @@ function setupFilters() {
         project.description.toLowerCase().includes(searchTerm) ||
         project.owner.name.toLowerCase().includes(searchTerm) ||
         project.owner.country.toLowerCase().includes(searchTerm) ||
-        project.techStack.some(tech => tech.toLowerCase().includes(searchTerm))
+        project.techStack.some((tech: string) => tech.toLowerCase().includes(searchTerm))
       );
     }
     

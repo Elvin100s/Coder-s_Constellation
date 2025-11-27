@@ -20,7 +20,7 @@ AuthService.onAuthStateChange((event, session) => {
 (window as any).testSignIn = async () => {
   console.log('Testing signin...');
   try {
-    const user = await MockAuthService.loginWithGitHub();
+    const user = await AuthService.signInWithGitHub();
     updateAuthUI();
     console.log('Signin successful:', user);
   } catch (error) {

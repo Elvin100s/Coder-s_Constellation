@@ -100,7 +100,7 @@ function renderProjectContent(container: HTMLElement, project: any) {
         <div class="mb-6">
           <h2 class="text-lg font-semibold text-neon-blue mb-3">Tech Stack</h2>
           <div class="flex flex-wrap gap-2">
-            ${project.techStack.map((tech, index) => {
+            ${project.techStack.map((tech: string, index: number) => {
               const colors = ['bg-neon-pink/20 text-neon-pink border-neon-pink/30', 'bg-neon-blue/20 text-neon-blue border-neon-blue/30', 'bg-neon-purple/20 text-neon-purple border-neon-purple/30'];
               const colorClass = colors[index % colors.length];
               return `

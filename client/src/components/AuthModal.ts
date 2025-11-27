@@ -58,8 +58,8 @@ export class AuthModal {
     AuthModal.setupEventListeners(modal, mode)
   }
 
-  static setupEventListeners(modal: HTMLElement, initialMode: 'login' | 'signup') {
-    let currentMode = initialMode
+  static setupEventListeners(modal: HTMLElement, _initialMode: 'login' | 'signup') {
+    // let currentMode = initialMode
 
     // Close modal
     const closeBtn = modal.querySelector('.close-auth-modal')
