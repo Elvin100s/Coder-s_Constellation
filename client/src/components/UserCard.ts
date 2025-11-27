@@ -1,5 +1,4 @@
 import { User } from '../data/sampleUsers';
-import { openEmailClient } from '../utils/emailHelper';
 
 export function renderUserCard(user: User): HTMLElement {
   const card = document.createElement('div');
