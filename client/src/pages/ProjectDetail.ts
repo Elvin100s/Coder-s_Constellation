@@ -101,12 +101,15 @@ export function renderProjectDetail(): HTMLElement {
           </div>
         </div>
 
-        <!-- Contact Button -->
+        <!-- Gmail Button -->
         <div class="pt-6 border-t border-neon-blue/20">
           <a 
             href="mailto:${generateRealisticEmail(project.owner.name)}?subject=Collaboration%20on%20${encodeURIComponent(project.title)}&body=Hi%20${encodeURIComponent(project.owner.name)},%0D%0A%0D%0AI%20found%20your%20project%20'${encodeURIComponent(project.title)}'%20on%20Coders%20Constellation%20and%20I'm%20interested%20in%20collaborating.%0D%0A%0D%0AProject:%20${encodeURIComponent(project.title)}%0D%0ATech%20Stack:%20${encodeURIComponent(project.techStack.join(', '))}%0D%0A%0D%0AI'd%20love%20to%20discuss%20how%20I%20can%20contribute%20to%20this%20project.%0D%0A%0D%0ABest%20regards"
-            class="btn btn-primary w-full px-4 py-3 text-sm sm:text-lg sm:px-8 inline-block text-center break-words">
-            <span class="block sm:inline">Contact Project Owner</span>
+            class="btn btn-primary w-full px-4 py-3 text-sm sm:text-lg sm:px-8 inline-block text-center break-words flex items-center justify-center space-x-2">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-.904.732-1.636 1.636-1.636h3.819v.273L12 8.91l6.545-4.816v-.273h3.819c.904 0 1.636.732 1.636 1.636z"/>
+            </svg>
+            <span>Gmail</span>
           </a>
         </div>
       </div>
