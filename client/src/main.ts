@@ -71,7 +71,7 @@ setTimeout(() => {
   loadingScreen.hide();
 }, 3000);
 
-console.log('🌟 Coders Constellation initialized!');
+console.log('🌟 Coders Constellation initialized! v1.1.0 - OAuth Fixed');
 
 // Debug function to check projects
 (window as any).checkProjects = () => {
