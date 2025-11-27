@@ -1,7 +1,7 @@
 import { sampleProjects } from '../data/sampleProjects';
 import { renderProjectCard } from '../components/ProjectCard';
 
-// Using sample projects instead of database
+// Using sample projects for display
 
 export function renderDashboard(): HTMLElement {
   const container = document.createElement('div');
@@ -207,7 +207,6 @@ export function renderDashboard(): HTMLElement {
   requestAnimationFrame(() => {
     setTimeout(() => {
       console.log('Dashboard DOM ready, rendering projects...');
-      // Using sample projects
       renderProjects(sampleProjects);
       setupFilters();
     }, 50);
