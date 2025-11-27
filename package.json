@@ -1,0 +1,14 @@
+{
+  "name": "coders-constellation",
+  "version": "1.0.0",
+  "description": "Collaborative platform for African developers",
+  "scripts": {
+    "dev": "npm run dev:client",
+    "dev:client": "cd client && npm run dev",
+    "build": "cd client && npm run build",
+    "preview": "cd client && npm run preview"
+  },
+  "keywords": ["collaboration", "developers", "africa"],
+  "author": "Elvin Cyubahiro",
+  "license": "MIT"
+}
