@@ -9,7 +9,7 @@ import { renderCreateProject } from './pages/CreateProject';
 import { renderUsers } from './pages/Users';
 import './components/Toast'; // Initialize toast system
 import { loadingScreen } from './components/LoadingScreen';
-import './utils/emailComposer'; // Initialize email composer
+// Contact functionality uses direct mailto links
 
 // Show initial loading screen
 loadingScreen.show('Initializing...');

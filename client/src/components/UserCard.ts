@@ -59,25 +59,13 @@ export function renderUserCard(user: User): HTMLElement {
       </div>
       
       <div class="flex items-center space-x-2">
-        <button 
-           class="p-2 text-gray-400 hover:text-neon-blue transition-all duration-200 rounded-lg hover:bg-dark-700 hover:scale-110 email-btn group/email"
+        <a 
+           href="mailto:${user.email}?subject=Collaboration Opportunity - Coders Constellation&body=Hi ${user.name},%0D%0A%0D%0AI found your profile on Coders Constellation and I'm interested in collaborating on a project.%0D%0A%0D%0ABest regards"
+           class="btn btn-primary text-sm px-4 py-2"
            title="Send Email to ${user.name}"
-           data-email="${user.email}"
-           data-name="${user.name}"
-           onclick="event.stopPropagation(); openEmailComposer('${user.email}', '${user.name}')">
-          <svg class="w-4 h-4 group-hover/email:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-          </svg>
-        </button>
-        
-        <button 
-           class="p-2 text-gray-400 hover:text-green-400 transition-all duration-200 rounded-lg hover:bg-dark-700 hover:scale-110 quick-email-btn group/quick"
-           title="Quick Email to ${user.name}"
-           onclick="event.stopPropagation(); openQuickEmail('${user.email}', '${user.name}')">
-          <svg class="w-4 h-4 group-hover/quick:animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-          </svg>
-        </button>
+           onclick="event.stopPropagation()">
+          Contact
+        </a>
         
         <a href="https://github.com/${user.githubUsername}" 
            target="_blank" rel="noopener noreferrer"

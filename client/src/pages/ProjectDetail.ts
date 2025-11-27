@@ -70,9 +70,11 @@ export function renderProjectDetail(): HTMLElement {
 
         <!-- Contact Button -->
         <div class="pt-6 border-t border-neon-blue/20">
-          <button id="contactBtn" class="btn btn-primary w-full md:w-auto px-8 py-3 text-lg">
+          <a 
+            href="mailto:${project.owner.githubUsername}@users.noreply.github.com?subject=Collaboration on ${project.title}&body=Hi ${project.owner.name},%0D%0A%0D%0AI found your project '${project.title}' on Coders Constellation and I'm interested in collaborating.%0D%0A%0D%0AProject: ${project.title}%0D%0ATech Stack: ${project.techStack.join(', ')}%0D%0A%0D%0AI'd love to discuss how I can contribute to this project.%0D%0A%0D%0ABest regards"
+            class="btn btn-primary w-full md:w-auto px-8 py-3 text-lg inline-block text-center">
             Contact Project Owner
-          </button>
+          </a>
         </div>
       </div>
 
@@ -97,16 +99,7 @@ export function renderProjectDetail(): HTMLElement {
     </div>
   `;
   
-  // Setup contact button
-  setTimeout(() => {
-    const contactBtn = document.getElementById('contactBtn');
-    contactBtn?.addEventListener('click', () => {
-      const url = project.githubRepo 
-        ? `${project.githubRepo}/issues`
-        : `https://github.com/${project.owner.githubUsername}`;
-      window.open(url, '_blank');
-    });
-  }, 0);
+  // Contact functionality is handled by the onclick attribute
   
   return container;
 }

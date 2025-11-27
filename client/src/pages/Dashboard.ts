@@ -224,25 +224,50 @@ export async function refreshProjects() {
   await loadAndRenderProjects();
 }
 
-// Load projects from Supabase with fallback to sample data
+// Debug function to check project count
+(window as any).checkProjectCount = () => {
+  console.log('=== PROJECT COUNT DEBUG ===');
+  console.log('Sample projects:', sampleProjects.length);
+  console.log('Current projects:', currentProjects.length);
+  console.log('Projects in grid:', document.getElementById('projectsGrid')?.children.length || 0);
+  return {
+    sampleCount: sampleProjects.length,
+    currentCount: currentProjects.length,
+    renderedCount: document.getElementById('projectsGrid')?.children.length || 0
+  };
+};
+
+// Load projects - prioritize sample data for demo, with Supabase integration for new projects
 async function loadAndRenderProjects() {
   try {
-    console.log('Loading projects from Supabase...');
-    const supabaseProjects = await ProjectService.getAllProjects();
+    console.log('Loading projects...');
     
-    if (supabaseProjects && supabaseProjects.length > 0) {
-      console.log('Loaded', supabaseProjects.length, 'projects from Supabase');
-      // Convert Supabase format to frontend format
-      currentProjects = supabaseProjects.map(project => ProjectService.convertToFrontendFormat(project));
-    } else {
-      console.log('No projects in Supabase, using sample data');
-      currentProjects = [...sampleProjects];
+    // Start with sample projects for demo
+    currentProjects = [...sampleProjects];
+    
+    // Try to load additional projects from Supabase and merge them
+    try {
+      const supabaseProjects = await ProjectService.getAllProjects();
+      
+      if (supabaseProjects && supabaseProjects.length > 0) {
+        console.log('Found', supabaseProjects.length, 'additional projects from Supabase');
+        // Convert Supabase format to frontend format
+        const formattedSupabaseProjects = supabaseProjects.map(project => ProjectService.convertToFrontendFormat(project));
+        
+        // Add Supabase projects to the beginning (newest first)
+        currentProjects = [...formattedSupabaseProjects, ...sampleProjects];
+        console.log('Total projects:', currentProjects.length);
+      } else {
+        console.log('No additional projects in Supabase, using sample data only');
+      }
+    } catch (supabaseError) {
+      console.log('Supabase not available, using sample data only:', supabaseError);
     }
     
     renderProjects(currentProjects);
   } catch (error) {
-    console.error('Error loading projects from Supabase:', error);
-    console.log('Falling back to sample data');
+    console.error('Error loading projects:', error);
+    // Final fallback to sample data
     currentProjects = [...sampleProjects];
     renderProjects(currentProjects);
   }

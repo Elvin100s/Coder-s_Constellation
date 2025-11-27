@@ -2,6 +2,131 @@ import { ProjectService } from '../services/projectService'
 import { supabase } from '../lib/supabase'
 import { showToast } from '../components/Toast'
 
+// Available technologies for selection
+const availableTechnologies = [
+  'React', 'Vue.js', 'Angular', 'Next.js', 'Nuxt.js', 'Svelte',
+  'JavaScript', 'TypeScript', 'Python', 'Java', 'C#', 'Go', 'Rust', 'PHP',
+  'Node.js', 'Express', 'Django', 'Flask', 'Spring Boot', 'Laravel', 'Ruby on Rails',
+  'React Native', 'Flutter', 'Swift', 'Kotlin', 'Ionic',
+  'PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'SQLite', 'Firebase',
+  'Docker', 'Kubernetes', 'AWS', 'Azure', 'Google Cloud', 'Vercel', 'Netlify',
+  'TensorFlow', 'PyTorch', 'Scikit-learn', 'OpenCV',
+  'Solidity', 'Ethereum', 'Web3.js', 'Hardhat',
+  'Unity', 'Unreal Engine', 'Godot',
+  'Figma', 'Adobe XD', 'Sketch',
+  'Git', 'GitHub', 'GitLab', 'Bitbucket',
+  'Tailwind CSS', 'Bootstrap', 'Material-UI', 'Chakra UI',
+  'GraphQL', 'REST API', 'Socket.io', 'WebRTC',
+  'Jest', 'Cypress', 'Selenium', 'Playwright'
+];
+
+function setupTechStackSelector() {
+  const selector = document.getElementById('techStackSelector');
+  const dropdown = document.getElementById('techStackDropdown');
+  const placeholder = document.getElementById('techStackPlaceholder');
+  const hiddenInput = document.getElementById('techStack') as HTMLInputElement;
+  const searchInput = document.getElementById('techStackSearch') as HTMLInputElement;
+  const optionsContainer = document.getElementById('techStackOptions');
+  
+  let selectedTechs: string[] = [];
+  
+  // Populate options
+  function populateOptions(filter = '') {
+    if (!optionsContainer) return;
+    
+    const filteredTechs = availableTechnologies.filter(tech => 
+      tech.toLowerCase().includes(filter.toLowerCase()) && !selectedTechs.includes(tech)
+    );
+    
+    optionsContainer.innerHTML = filteredTechs.map(tech => `
+      <div class="px-3 py-2 hover:bg-dark-600 cursor-pointer text-white text-sm tech-option" data-tech="${tech}">
+        ${tech}
+      </div>
+    `).join('');
+    
+    // Add click handlers
+    optionsContainer.querySelectorAll('.tech-option').forEach(option => {
+      option.addEventListener('click', () => {
+        const tech = option.getAttribute('data-tech');
+        if (tech) addTech(tech);
+      });
+    });
+  }
+  
+  // Add technology
+  function addTech(tech: string) {
+    if (!selectedTechs.includes(tech)) {
+      selectedTechs.push(tech);
+      updateDisplay();
+      populateOptions(searchInput?.value || '');
+      if (searchInput) searchInput.value = '';
+    }
+  }
+  
+  // Remove technology
+  function removeTech(tech: string) {
+    selectedTechs = selectedTechs.filter(t => t !== tech);
+    updateDisplay();
+    populateOptions(searchInput?.value || '');
+  }
+  
+  // Update display
+  function updateDisplay() {
+    if (!selector || !placeholder || !hiddenInput) return;
+    
+    if (selectedTechs.length === 0) {
+      selector.innerHTML = '<span id="techStackPlaceholder" class="text-gray-400">Select technologies...</span>';
+    } else {
+      selector.innerHTML = selectedTechs.map(tech => `
+        <span class="inline-flex items-center px-2 py-1 bg-neon-blue/20 text-neon-blue text-xs rounded-full">
+          ${tech}
+          <button type="button" class="ml-1 text-neon-blue/70 hover:text-neon-blue remove-tech" data-tech="${tech}">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </span>
+      `).join('');
+      
+      // Add remove handlers
+      selector.querySelectorAll('.remove-tech').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const tech = btn.getAttribute('data-tech');
+          if (tech) removeTech(tech);
+        });
+      });
+    }
+    
+    // Update hidden input
+    hiddenInput.value = selectedTechs.join(',');
+  }
+  
+  // Event listeners
+  selector?.addEventListener('click', () => {
+    dropdown?.classList.toggle('hidden');
+    if (!dropdown?.classList.contains('hidden')) {
+      populateOptions();
+      searchInput?.focus();
+    }
+  });
+  
+  searchInput?.addEventListener('input', (e) => {
+    const filter = (e.target as HTMLInputElement).value;
+    populateOptions(filter);
+  });
+  
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!selector?.contains(e.target as Node) && !dropdown?.contains(e.target as Node)) {
+      dropdown?.classList.add('hidden');
+    }
+  });
+  
+  // Initial setup
+  populateOptions();
+}
+
 export function renderCreateProject(): HTMLElement {
   const container = document.createElement('div');
   container.className = 'min-h-screen bg-dark-900';
@@ -188,7 +313,8 @@ export function renderCreateProject(): HTMLElement {
       
       try {
         const formData = new FormData(form);
-        const techStack = (formData.get('techStack') as string).split(',').map(t => t.trim());
+        const techStackValue = formData.get('techStack') as string;
+        const techStack = techStackValue ? techStackValue.split(',').map(t => t.trim()).filter(t => t) : [];
         
         const projectData = {
           title: formData.get('title') as string,
