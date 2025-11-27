@@ -12,8 +12,8 @@ export class LoadingScreen {
     
     this.overlay.innerHTML = `
       <div class="text-center">
-        <div class="loader mb-4">${message}</div>
-        <div class="text-neon-blue/60 text-sm animate-pulse">Coders Constellation</div>
+        <div class="loader mb-4" style="animation: pulse 1.5s ease-in-out infinite;">${message}</div>
+        <div class="text-neon-blue/60 text-sm" style="animation: pulse 2s ease-in-out infinite;">Coders Constellation</div>
       </div>
     `;
 
