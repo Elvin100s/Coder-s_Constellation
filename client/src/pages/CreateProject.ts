@@ -1,3 +1,7 @@
+import { ProjectService } from '../services/projectService'
+import { supabase } from '../lib/supabase'
+import { showToast } from '../components/Toast'
+
 export function renderCreateProject(): HTMLElement {
   const container = document.createElement('div');
   container.className = 'min-h-screen bg-dark-900';
@@ -121,20 +125,23 @@ export function renderCreateProject(): HTMLElement {
             </select>
           </div>
 
-          <!-- Success Message -->
-          <div id="successMessage" class="hidden mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-            <div class="flex items-center space-x-2 text-green-800">
+          <!-- Error Message -->
+          <div id="errorMessage" class="hidden mb-6 p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
+            <div class="flex items-center space-x-2 text-red-400">
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
               </svg>
-              <span class="font-medium">Project posted successfully!</span>
+              <span class="font-medium" id="errorText">An error occurred</span>
             </div>
           </div>
 
           <!-- Buttons -->
           <div class="flex space-x-4">
-            <button type="submit" class="btn btn-primary flex-1">
-              Post Project
+            <button type="submit" id="submitButton" class="btn btn-primary flex-1">
+              <span id="submitText">Post Project</span>
+              <div id="submitSpinner" class="hidden ml-2">
+                <div class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+              </div>
             </button>
             <a href="/" data-link class="btn btn-secondary">
               Cancel
@@ -148,41 +155,79 @@ export function renderCreateProject(): HTMLElement {
   // Setup form submission
   setTimeout(() => {
     const form = document.getElementById('createProjectForm') as HTMLFormElement;
-    const successMessage = document.getElementById('successMessage');
+    const errorMessage = document.getElementById('errorMessage');
+    const errorText = document.getElementById('errorText');
+    const submitButton = document.getElementById('submitButton') as HTMLButtonElement;
+    const submitText = document.getElementById('submitText');
+    const submitSpinner = document.getElementById('submitSpinner');
     
-    form?.addEventListener('submit', (e) => {
+    form?.addEventListener('submit', async (e) => {
       e.preventDefault();
       
-      const formData = new FormData(form);
-      const techStack = (formData.get('techStack') as string).split(',').map(t => t.trim());
+      // Hide any previous error messages
+      errorMessage?.classList.add('hidden');
       
-      const newProject = {
-        id: Date.now().toString(),
-        title: formData.get('title') as string,
-        description: formData.get('description') as string,
-        techStack,
-        githubRepo: formData.get('githubRepo') as string || undefined,
-        owner: {
-          name: formData.get('ownerName') as string,
-          avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${formData.get('ownerName')}`,
-          githubUsername: formData.get('githubUsername') as string,
-          country: formData.get('country') as string,
-        },
-        createdAt: new Date().toISOString()
-      };
+      // Check if user is authenticated
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        showToast('Please log in to post a project', 'error');
+        return;
+      }
       
-      // In a real app, this would POST to an API
-      console.log('New project:', newProject);
+      // Show loading state
+      submitButton.disabled = true;
+      submitText!.textContent = 'Posting...';
+      submitSpinner?.classList.remove('hidden');
       
-      // Show success message
-      successMessage?.classList.remove('hidden');
-      form.reset();
-      
-      // Redirect after 2 seconds
-      setTimeout(() => {
-        window.history.pushState({}, '', '/');
-        window.dispatchEvent(new PopStateEvent('popstate'));
-      }, 2000);
+      try {
+        const formData = new FormData(form);
+        const techStack = (formData.get('techStack') as string).split(',').map(t => t.trim());
+        
+        const projectData = {
+          title: formData.get('title') as string,
+          description: formData.get('description') as string,
+          tech_stack: techStack,
+          github_repo: (formData.get('githubRepo') as string) || null,
+          owner_name: formData.get('ownerName') as string,
+          owner_github_username: formData.get('githubUsername') as string,
+          owner_country: formData.get('country') as string,
+          owner_avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${formData.get('ownerName')}`
+        };
+        
+        // Create project in database
+        const result = await ProjectService.createProject(projectData);
+        
+        if (!result) {
+          throw new Error('Failed to create project');
+        }
+        
+        // Show success message
+        showToast('Project posted successfully!', 'success');
+        
+        // Reset form
+        form.reset();
+        
+        // Redirect to the new project page after a short delay
+        setTimeout(() => {
+          window.history.pushState({}, '', `/projects/${result.id}`);
+          window.dispatchEvent(new PopStateEvent('popstate'));
+        }, 1500);
+        
+      } catch (error) {
+        console.error('Error creating project:', error);
+        
+        // Show error message
+        const errorMsg = error instanceof Error ? error.message : 'Failed to post project. Please try again.';
+        errorText!.textContent = errorMsg;
+        errorMessage?.classList.remove('hidden');
+        showToast('Failed to post project', 'error');
+        
+      } finally {
+        // Reset button state
+        submitButton.disabled = false;
+        submitText!.textContent = 'Post Project';
+        submitSpinner?.classList.add('hidden');
+      }
     });
   }, 0);
   
