@@ -52,6 +52,25 @@ router.addRoute('/projects/:id', () => {
   renderPage(renderProjectDetail());
 });
 
+router.addRoute('/auth/callback', () => {
+  // Handle OAuth callback - redirect to home after auth
+  console.log('Auth callback received, redirecting to home...');
+  setTimeout(() => {
+    router.navigate('/');
+  }, 1000);
+  
+  // Show loading while processing auth
+  const loadingDiv = document.createElement('div');
+  loadingDiv.className = 'min-h-screen bg-dark-900 flex items-center justify-center';
+  loadingDiv.innerHTML = `
+    <div class="text-center">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-neon-blue mx-auto mb-4"></div>
+      <p class="text-white">Completing sign in...</p>
+    </div>
+  `;
+  renderPage(loadingDiv);
+});
+
 // Helper function to render pages
 function renderPage(content: HTMLElement) {
   // Hide any existing loading screen first
