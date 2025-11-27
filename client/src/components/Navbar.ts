@@ -20,9 +20,11 @@ AuthService.onAuthStateChange((event, session) => {
 (window as any).testSignIn = async () => {
   console.log('Testing signin...');
   try {
-    const user = await AuthService.signInWithGitHub();
+    // const user = await AuthService.signInWithGitHub();
+    const { showToast } = await import('../components/Toast');
+    showToast('Authentication temporarily disabled for demo', 'info');
     updateAuthUI();
-    console.log('Signin successful:', user);
+    console.log('Signin temporarily disabled');
   } catch (error) {
     console.error('Signin failed:', error);
   }

@@ -1,5 +1,5 @@
-import { ProjectService } from '../services/projectService'
-import { supabase } from '../lib/supabase'
+// import { ProjectService } from '../services/projectService'
+// import { supabase } from '../lib/supabase'
 import { showToast } from '../components/Toast'
 
 export function renderCreateProject(): HTMLElement {
@@ -167,12 +167,12 @@ export function renderCreateProject(): HTMLElement {
       // Hide any previous error messages
       errorMessage?.classList.add('hidden');
       
-      // Check if user is authenticated
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        showToast('Please log in to post a project', 'error');
-        return;
-      }
+      // Temporarily disable authentication for demo
+      // const { data: { user } } = await supabase.auth.getUser();
+      // if (!user) {
+      //   showToast('Please log in to post a project', 'error');
+      //   return;
+      // }
       
       // Show loading state
       submitButton.disabled = true;
@@ -194,22 +194,18 @@ export function renderCreateProject(): HTMLElement {
           owner_avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${formData.get('ownerName')}`
         };
         
-        // Create project in database
-        const result = await ProjectService.createProject(projectData);
-        
-        if (!result) {
-          throw new Error('Failed to create project');
-        }
+        // For demo: just show success message (no database save)
+        console.log('Project data:', projectData);
         
         // Show success message
-        showToast('Project posted successfully!', 'success');
+        showToast('Project posted successfully! (Demo mode)', 'success');
         
         // Reset form
         form.reset();
         
-        // Redirect to the new project page after a short delay
+        // Redirect to home page after a short delay
         setTimeout(() => {
-          window.history.pushState({}, '', `/projects/${result.id}`);
+          window.history.pushState({}, '', '/');
           window.dispatchEvent(new PopStateEvent('popstate'));
         }, 1500);
         
