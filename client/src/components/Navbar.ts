@@ -92,8 +92,17 @@ export function renderNavbar(): HTMLElement {
   
   // Check for OAuth redirect and update auth state
   setTimeout(() => {
-    if (window.location.hash.includes('access_token')) {
+    if (window.location.hash.includes('access_token') || window.location.hash.includes('auth-success')) {
       console.log('OAuth redirect detected, updating auth UI...');
+      // Clear any existing auth modals
+      const existingModal = document.querySelector('.auth-modal');
+      if (existingModal) {
+        existingModal.remove();
+      }
+      // Clear the hash to prevent refresh loops
+      if (window.location.hash.includes('auth-success')) {
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
       setTimeout(() => updateAuthUI(), 1000);
     }
   }, 500);
