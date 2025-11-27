@@ -28,6 +28,12 @@ AuthService.onAuthStateChange((event, session) => {
   }
 };
 
+// Global function to refresh auth UI
+(window as any).refreshAuth = () => {
+  console.log('Manually refreshing auth UI...');
+  updateAuthUI();
+};
+
 // Global function for testing loading screen
 (window as any).testLoading = async () => {
   const { loadingScreen } = await import('./LoadingScreen');
@@ -83,6 +89,14 @@ export function renderNavbar(): HTMLElement {
   setTimeout(() => {
     updateAuthUI();
   }, 100);
+  
+  // Check for OAuth redirect and update auth state
+  setTimeout(() => {
+    if (window.location.hash.includes('access_token')) {
+      console.log('OAuth redirect detected, updating auth UI...');
+      setTimeout(() => updateAuthUI(), 1000);
+    }
+  }, 500);
   
   return nav;
 }
