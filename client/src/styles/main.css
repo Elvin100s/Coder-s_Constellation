@@ -48,6 +48,27 @@
   .float {
     animation: float 3s ease-in-out infinite;
   }
+  
+  /* Mobile optimizations */
+  @media (max-width: 640px) {
+    .btn {
+      @apply text-sm px-3 py-2;
+    }
+    
+    .card {
+      @apply mx-2;
+    }
+    
+    /* Prevent horizontal overflow */
+    .truncate-mobile {
+      @apply truncate max-w-[120px];
+    }
+    
+    /* Better touch targets */
+    .btn, button, a {
+      @apply min-h-[44px] flex items-center justify-center;
+    }
+  }
 
   /* Email Button Animations */
   .email-btn:hover {

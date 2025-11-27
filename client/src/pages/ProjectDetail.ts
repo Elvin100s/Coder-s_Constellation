@@ -71,11 +71,11 @@ export function renderProjectDetail(): HTMLElement {
         <!-- Contact Button -->
         <div class="pt-6 border-t border-neon-blue/20">
           <a 
-            href="mailto:${project.owner.githubUsername}@users.noreply.github.com?subject=Collaboration%20on%20${encodeURIComponent(project.title)}&body=Hi%20${encodeURIComponent(project.owner.name)},%0D%0A%0D%0AI%20found%20your%20project%20'${encodeURIComponent(project.title)}'%20on%20Coders%20Constellation%20and%20I'm%20interested%20in%20collaborating.%0D%0A%0D%0AProject:%20${encodeURIComponent(project.title)}%0D%0ATech%20Stack:%20${encodeURIComponent(project.techStack.join(', '))}%0D%0A%0D%0AI'd%20love%20to%20discuss%20how%20I%20can%20contribute%20to%20this%20project.%0D%0A%0D%0ABest%20regards"
+            href="${project.githubRepo ? project.githubRepo + '/issues' : 'https://github.com/' + project.owner.githubUsername}"
             class="btn btn-primary w-full md:w-auto px-8 py-3 text-lg inline-block text-center"
             target="_blank"
             rel="noopener noreferrer">
-            Contact Project Owner
+            ${project.githubRepo ? 'Create Issue in Repository' : 'View GitHub Profile'}
           </a>
         </div>
       </div>
@@ -83,17 +83,19 @@ export function renderProjectDetail(): HTMLElement {
       <!-- Owner Profile Card -->
       <div class="card p-6">
         <h2 class="text-lg font-semibold text-neon-pink mb-4">Project Owner</h2>
-        <div class="flex items-center space-x-4">
-          <img src="${project.owner.avatar}" alt="${project.owner.name}" 
-               class="w-16 h-16 rounded-full border-2 border-neon-blue/30" />
-          <div class="flex-1">
-            <h3 class="font-semibold text-white">${project.owner.name}</h3>
-            <p class="text-neon-blue">@${project.owner.githubUsername}</p>
-            <p class="text-sm text-gray-400">${project.owner.country}</p>
+        <div class="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
+          <div class="flex items-center space-x-4 flex-1">
+            <img src="${project.owner.avatar}" alt="${project.owner.name}" 
+                 class="w-12 h-12 sm:w-16 sm:h-16 rounded-full border-2 border-neon-blue/30" />
+            <div class="flex-1 min-w-0">
+              <h3 class="font-semibold text-white truncate">${project.owner.name}</h3>
+              <p class="text-neon-blue text-sm truncate">@${project.owner.githubUsername}</p>
+              <p class="text-xs sm:text-sm text-gray-400">${project.owner.country}</p>
+            </div>
           </div>
           <a href="https://github.com/${project.owner.githubUsername}" 
              target="_blank" rel="noopener noreferrer"
-             class="btn btn-secondary">
+             class="btn btn-secondary w-full sm:w-auto text-center text-sm">
             View GitHub Profile
           </a>
         </div>
