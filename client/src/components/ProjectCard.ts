@@ -4,6 +4,13 @@ export function renderProjectCard(project: Project): HTMLElement {
   const card = document.createElement('div');
   card.className = 'card p-6 cursor-pointer transform hover:scale-[1.02] transition-all duration-300 group';
   
+  // Build mailto URL for project owner
+  const mailtoUrl = (() => {
+    const subject = encodeURIComponent(`Interested in ${project.title} - Coders Constellation`);
+    const body = encodeURIComponent(`Hi ${project.owner.name},\n\nI found your project "${project.title}" on Coders Constellation and I'm interested in collaborating.\n\nBest regards`);
+    return `mailto:${project.owner.email}?subject=${subject}&body=${body}`;
+  })();
+  
   card.innerHTML = `
     <div class="flex items-start justify-between mb-4">
       <div class="flex items-center space-x-3">
@@ -50,12 +57,21 @@ export function renderProjectCard(project: Project): HTMLElement {
           <span>${Math.floor(Math.random() * 50) + 10} views</span>
         </span>
       </div>
-      <span class="text-neon-blue font-medium group-hover:text-neon-pink transition-colors flex items-center space-x-1 text-xs sm:text-sm">
-        <span>View Details</span>
-        <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
-      </span>
+      <div class="flex items-center space-x-2">
+        <a 
+           href="${mailtoUrl}"
+           class="btn btn-primary text-xs sm:text-sm px-3 py-1.5"
+           title="Contact ${project.owner.name}"
+           onclick="event.stopPropagation()">
+          Contact
+        </a>
+        <span class="text-neon-blue font-medium group-hover:text-neon-pink transition-colors flex items-center space-x-1 text-xs sm:text-sm">
+          <span>View Details</span>
+          <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </span>
+      </div>
     </div>
   `;
   
