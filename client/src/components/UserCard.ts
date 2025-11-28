@@ -59,13 +59,15 @@ export function renderUserCard(user: User): HTMLElement {
       </div>
       
       <div class="flex items-center space-x-2">
-        <button 
-           class="contact-btn btn btn-primary text-sm px-4 py-2"
+        <a 
+           href="https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(user.email)}&su=${encodeURIComponent('Collaboration Opportunity - Coders Constellation')}&body=${encodeURIComponent(`Hi ${user.name},\n\nI found your profile on Coders Constellation and I'm interested in collaborating on a project.\n\nBest regards`)}"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="btn btn-primary text-sm px-4 py-2"
            title="Send Email to ${user.name}"
-           data-email="${user.email}"
-           data-name="${user.name}">
+           onclick="event.stopPropagation()">
           Contact
-        </button>
+        </a>
         
         <a href="https://github.com/${user.githubUsername}" 
            target="_blank" rel="noopener noreferrer"
@@ -79,33 +81,6 @@ export function renderUserCard(user: User): HTMLElement {
       </div>
     </div>
   `;
-  
-  // Add event listener for contact button
-  const contactBtn = card.querySelector('.contact-btn') as HTMLButtonElement;
-  contactBtn?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    
-    const email = contactBtn.getAttribute('data-email') || '';
-    const name = contactBtn.getAttribute('data-name') || '';
-    
-    const subject = 'Collaboration Opportunity - Coders Constellation';
-    const body = `Hi ${name},\n\nI found your profile on Coders Constellation and I'm interested in collaborating on a project.\n\nBest regards`;
-    
-    // Create Gmail compose URL
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    
-    console.log('Opening Gmail for:', email);
-    
-    // Open in new tab
-    const newWindow = window.open(gmailUrl, '_blank');
-    
-    if (!newWindow) {
-      console.error('Popup blocked, trying alternative...');
-      // Fallback if popup is blocked
-      window.location.href = gmailUrl;
-    }
-  });
   
   return card;
 }
