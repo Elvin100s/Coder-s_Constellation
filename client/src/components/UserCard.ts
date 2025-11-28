@@ -4,12 +4,11 @@ export function renderUserCard(user: User): HTMLElement {
   const card = document.createElement('div');
   card.className = 'card p-6 cursor-pointer transform hover:scale-[1.02] transition-all duration-300 group';
   
-  // Build Gmail URL properly outside template string
-  const gmailUrl = (() => {
-    const to = encodeURIComponent(user.email);
+  // Build mailto URL properly outside template string
+  const mailtoUrl = (() => {
     const subject = encodeURIComponent('Collaboration Opportunity - Coders Constellation');
     const body = encodeURIComponent(`Hi ${user.name},\n\nI found your profile on Coders Constellation and I'm interested in collaborating on a project.\n\nBest regards`);
-    return `https://mail.google.com/mail/?view=cm&fs=1&to=${to}&su=${subject}&body=${body}`;
+    return `mailto:${user.email}?subject=${subject}&body=${body}`;
   })();
   
   card.innerHTML = `
@@ -68,9 +67,7 @@ export function renderUserCard(user: User): HTMLElement {
       
       <div class="flex items-center space-x-2">
         <a 
-           href="${gmailUrl}"
-           target="_blank"
-           rel="noopener noreferrer"
+           href="${mailtoUrl}"
            class="btn btn-primary text-sm px-4 py-2"
            title="Send Email to ${user.name}"
            onclick="event.stopPropagation()">
