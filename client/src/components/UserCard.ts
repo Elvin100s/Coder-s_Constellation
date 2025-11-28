@@ -81,11 +81,13 @@ export function renderUserCard(user: User): HTMLElement {
   `;
   
   // Add event listener for contact button
-  const contactBtn = card.querySelector('.contact-btn');
+  const contactBtn = card.querySelector('.contact-btn') as HTMLButtonElement;
   contactBtn?.addEventListener('click', (e) => {
     e.stopPropagation();
-    const email = (e.target as HTMLElement).getAttribute('data-email') || '';
-    const name = (e.target as HTMLElement).getAttribute('data-name') || '';
+    e.preventDefault();
+    
+    const email = contactBtn.getAttribute('data-email') || '';
+    const name = contactBtn.getAttribute('data-name') || '';
     
     const subject = 'Collaboration Opportunity - Coders Constellation';
     const body = `Hi ${name},\n\nI found your profile on Coders Constellation and I'm interested in collaborating on a project.\n\nBest regards`;
@@ -93,8 +95,16 @@ export function renderUserCard(user: User): HTMLElement {
     // Create Gmail compose URL
     const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     
+    console.log('Opening Gmail for:', email);
+    
     // Open in new tab
-    window.open(gmailUrl, '_blank');
+    const newWindow = window.open(gmailUrl, '_blank');
+    
+    if (!newWindow) {
+      console.error('Popup blocked, trying alternative...');
+      // Fallback if popup is blocked
+      window.location.href = gmailUrl;
+    }
   });
   
   return card;
