@@ -60,9 +60,10 @@ export function renderUserCard(user: User): HTMLElement {
       
       <div class="flex items-center space-x-2">
         <button 
-           class="btn btn-primary text-sm px-4 py-2"
+           class="contact-btn btn btn-primary text-sm px-4 py-2"
            title="Send Email to ${user.name}"
-           onclick="event.stopPropagation(); openEmail('${user.email}', 'Collaboration Opportunity - Coders Constellation', 'Hi ${user.name},\\n\\nI found your profile on Coders Constellation and I\\'m interested in collaborating on a project.\\n\\nBest regards');">
+           data-email="${user.email}"
+           data-name="${user.name}">
           Contact
         </button>
         
@@ -78,6 +79,23 @@ export function renderUserCard(user: User): HTMLElement {
       </div>
     </div>
   `;
+  
+  // Add event listener for contact button
+  const contactBtn = card.querySelector('.contact-btn');
+  contactBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const email = (e.target as HTMLElement).getAttribute('data-email') || '';
+    const name = (e.target as HTMLElement).getAttribute('data-name') || '';
+    
+    const subject = 'Collaboration Opportunity - Coders Constellation';
+    const body = `Hi ${name},\n\nI found your profile on Coders Constellation and I'm interested in collaborating on a project.\n\nBest regards`;
+    
+    // Create Gmail compose URL
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    // Open in new tab
+    window.open(gmailUrl, '_blank');
+  });
   
   return card;
 }
