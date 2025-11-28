@@ -9,6 +9,7 @@ export interface Project {
     avatar: string;
     githubUsername: string;
     country: string;
+    email: string;
   };
   createdAt: string;
 }
@@ -24,7 +25,8 @@ export const sampleProjects: Project[] = [
       name: 'Amara Okafor',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Amara',
       githubUsername: 'amaraokafor',
-      country: 'Nigeria'
+      country: 'Nigeria',
+      email: 'amara.okafor@example.com'
     },
     createdAt: '2024-11-20T10:30:00Z'
   },
@@ -38,7 +40,8 @@ export const sampleProjects: Project[] = [
       name: 'Kwame Mensah',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Kwame',
       githubUsername: 'kwamemensah',
-      country: 'Ghana'
+      country: 'Ghana',
+      email: 'kwame.mensah@example.com'
     },
     createdAt: '2024-11-19T14:20:00Z'
   },
@@ -52,7 +55,8 @@ export const sampleProjects: Project[] = [
       name: 'Fatima Hassan',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Fatima',
       githubUsername: 'fatimahassan',
-      country: 'Kenya'
+      country: 'Kenya',
+      email: 'fatima.hassan@example.com'
     },
     createdAt: '2024-11-18T09:15:00Z'
   },
@@ -66,7 +70,8 @@ export const sampleProjects: Project[] = [
       name: 'Thabo Ndlovu',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Thabo',
       githubUsername: 'thabon',
-      country: 'South Africa'
+      country: 'South Africa',
+      email: 'thabo.ndlovu@example.com'
     },
     createdAt: '2024-11-17T16:45:00Z'
   },
@@ -80,7 +85,8 @@ export const sampleProjects: Project[] = [
       name: 'Zainab Diallo',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Zainab',
       githubUsername: 'zainabdiallo',
-      country: 'Senegal'
+      country: 'Senegal',
+      email: 'zainab.diallo@example.com'
     },
     createdAt: '2024-11-16T11:00:00Z'
   },
@@ -94,7 +100,8 @@ export const sampleProjects: Project[] = [
       name: 'Elvin Cyubahiro',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Elvin',
       githubUsername: 'elvincyubahiro',
-      country: 'Rwanda'
+      country: 'Rwanda',
+      email: 'elvin.cyubahiro@example.com'
     },
     createdAt: '2024-11-15T13:30:00Z'
   },
@@ -108,7 +115,8 @@ export const sampleProjects: Project[] = [
       name: 'Aisha Kamara',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Aisha',
       githubUsername: 'aishakamara',
-      country: 'Sierra Leone'
+      country: 'Sierra Leone',
+      email: 'aisha.kamara@example.com'
     },
     createdAt: '2024-11-14T08:20:00Z'
   },
@@ -122,7 +130,8 @@ export const sampleProjects: Project[] = [
       name: 'Kofi Asante',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Kofi',
       githubUsername: 'kofiasante',
-      country: 'Ghana'
+      country: 'Ghana',
+      email: 'kofi.asante@example.com'
     },
     createdAt: '2024-11-13T15:10:00Z'
   },
@@ -136,7 +145,8 @@ export const sampleProjects: Project[] = [
       name: 'Naledi Moyo',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Naledi',
       githubUsername: 'naledimoyo',
-      country: 'Botswana'
+      country: 'Botswana',
+      email: 'naledi.moyo@example.com'
     },
     createdAt: '2024-11-12T12:00:00Z'
   },
@@ -150,7 +160,8 @@ export const sampleProjects: Project[] = [
       name: 'Ibrahim Musa',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ibrahim',
       githubUsername: 'ibrahimmusa',
-      country: 'Ethiopia'
+      country: 'Ethiopia',
+      email: 'ibrahim.musa@example.com'
     },
     createdAt: '2024-11-11T09:45:00Z'
   },
@@ -164,7 +175,8 @@ export const sampleProjects: Project[] = [
       name: 'Chioma Nwosu',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Chioma',
       githubUsername: 'chiomanwosu',
-      country: 'Nigeria'
+      country: 'Nigeria',
+      email: 'chioma.nwosu@example.com'
     },
     createdAt: '2024-11-10T14:30:00Z'
   },
@@ -177,7 +189,8 @@ export const sampleProjects: Project[] = [
       name: 'Tendai Moyo',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Tendai',
       githubUsername: 'tendaimoyo',
-      country: 'Zimbabwe'
+      country: 'Zimbabwe',
+      email: 'tendai.moyo@example.com'
     },
     createdAt: '2024-11-09T11:20:00Z'
   },
@@ -191,7 +204,8 @@ export const sampleProjects: Project[] = [
       name: 'Youssef El-Amin',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Youssef',
       githubUsername: 'youssefamin',
-      country: 'Egypt'
+      country: 'Egypt',
+      email: 'youssef.elamin@example.com'
     },
     createdAt: '2024-11-08T16:45:00Z'
   },
@@ -204,7 +218,8 @@ export const sampleProjects: Project[] = [
       name: 'Amina Juma',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Amina',
       githubUsername: 'aminajuma',
-      country: 'Tanzania'
+      country: 'Tanzania',
+      email: 'amina.juma@example.com'
     },
     createdAt: '2024-11-07T09:15:00Z'
   },
@@ -218,7 +233,8 @@ export const sampleProjects: Project[] = [
       name: 'Kwesi Boateng',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Kwesi',
       githubUsername: 'kwesiboateng',
-      country: 'Ghana'
+      country: 'Ghana',
+      email: 'kwesi.boateng@example.com'
     },
     createdAt: '2024-11-06T13:00:00Z'
   },
@@ -232,7 +248,8 @@ export const sampleProjects: Project[] = [
       name: 'Lindiwe Khumalo',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Lindiwe',
       githubUsername: 'lindiwekhumalo',
-      country: 'South Africa'
+      country: 'South Africa',
+      email: 'lindiwe.khumalo@example.com'
     },
     createdAt: '2024-11-05T10:30:00Z'
   },
@@ -245,7 +262,8 @@ export const sampleProjects: Project[] = [
       name: 'Jabari Omondi',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jabari',
       githubUsername: 'jabariomondi',
-      country: 'Kenya'
+      country: 'Kenya',
+      email: 'jabari.omondi@example.com'
     },
     createdAt: '2024-11-04T15:20:00Z'
   },
@@ -259,7 +277,8 @@ export const sampleProjects: Project[] = [
       name: 'Fatoumata Diop',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Fatoumata',
       githubUsername: 'fatoumadiop',
-      country: 'Mali'
+      country: 'Mali',
+      email: 'fatoumata.diop@example.com'
     },
     createdAt: '2024-11-03T08:45:00Z'
   },
@@ -272,7 +291,8 @@ export const sampleProjects: Project[] = [
       name: 'Abebe Tadesse',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Abebe',
       githubUsername: 'abebetadesse',
-      country: 'Ethiopia'
+      country: 'Ethiopia',
+      email: 'abebe.tadesse@example.com'
     },
     createdAt: '2024-11-02T12:10:00Z'
   },
@@ -286,7 +306,8 @@ export const sampleProjects: Project[] = [
       name: 'Nia Mensah',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Nia',
       githubUsername: 'niamensah',
-      country: 'Ghana'
+      country: 'Ghana',
+      email: 'nia.mensah@example.com'
     },
     createdAt: '2024-11-01T14:55:00Z'
   },
@@ -299,7 +320,8 @@ export const sampleProjects: Project[] = [
       name: 'Sekou Traore',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sekou',
       githubUsername: 'sekoutraore',
-      country: 'Ivory Coast'
+      country: 'Ivory Coast',
+      email: 'sekou.traore@example.com'
     },
     createdAt: '2024-10-31T09:30:00Z'
   },
@@ -313,7 +335,8 @@ export const sampleProjects: Project[] = [
       name: 'Thandiwe Dube',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Thandiwe',
       githubUsername: 'thandiwedube',
-      country: 'Zambia'
+      country: 'Zambia',
+      email: 'thandiwe.dube@example.com'
     },
     createdAt: '2024-10-30T11:15:00Z'
   },
@@ -326,7 +349,8 @@ export const sampleProjects: Project[] = [
       name: 'Mandla Nkosi',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Mandla',
       githubUsername: 'mandlankosi',
-      country: 'South Africa'
+      country: 'South Africa',
+      email: 'mandla.nkosi@example.com'
     },
     createdAt: '2024-10-29T16:40:00Z'
   },
@@ -340,7 +364,8 @@ export const sampleProjects: Project[] = [
       name: 'Amara Nwosu',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=AmaraN',
       githubUsername: 'amaranwosu',
-      country: 'Nigeria'
+      country: 'Nigeria',
+      email: 'amara.nwosu@example.com'
     },
     createdAt: '2024-10-28T13:25:00Z'
   },
@@ -353,7 +378,8 @@ export const sampleProjects: Project[] = [
       name: 'Zuri Mwangi',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Zuri',
       githubUsername: 'zurimwangi',
-      country: 'Kenya'
+      country: 'Kenya',
+      email: 'zuri.mwangi@example.com'
     },
     createdAt: '2024-10-27T10:50:00Z'
   },
@@ -366,7 +392,8 @@ export const sampleProjects: Project[] = [
       name: 'Yara Abdallah',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Yara',
       githubUsername: 'yaraabdallah',
-      country: 'Egypt'
+      country: 'Egypt',
+      email: 'yara.abdallah@example.com'
     },
     createdAt: '2024-10-26T14:35:00Z'
   },
@@ -380,7 +407,8 @@ export const sampleProjects: Project[] = [
       name: 'Chidi Okonkwo',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Chidi',
       githubUsername: 'chidiokonkwo',
-      country: 'Nigeria'
+      country: 'Nigeria',
+      email: 'chidi.okonkwo@example.com'
     },
     createdAt: '2024-10-25T09:20:00Z'
   },
@@ -393,7 +421,8 @@ export const sampleProjects: Project[] = [
       name: 'Akosua Mensah',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Akosua',
       githubUsername: 'akosuamensah',
-      country: 'Ghana'
+      country: 'Ghana',
+      email: 'akosua.mensah@example.com'
     },
     createdAt: '2024-10-24T15:45:00Z'
   },
@@ -406,7 +435,8 @@ export const sampleProjects: Project[] = [
       name: 'Olusegun Adeyemi',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Olusegun',
       githubUsername: 'olusegunadeye mi',
-      country: 'Nigeria'
+      country: 'Nigeria',
+      email: 'olusegun.adeyemi@example.com'
     },
     createdAt: '2024-10-23T11:30:00Z'
   },
@@ -420,7 +450,8 @@ export const sampleProjects: Project[] = [
       name: 'Lerato Molefe',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Lerato',
       githubUsername: 'leratomolefe',
-      country: 'South Africa'
+      country: 'South Africa',
+      email: 'lerato.molefe@example.com'
     },
     createdAt: '2024-10-22T08:15:00Z'
   }
